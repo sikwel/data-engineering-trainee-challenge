@@ -12,7 +12,7 @@ services:
     volumes:
       - ./postgres:/bitnami/postgresql/
 
-  sikwel-data-engineering-project-environment:
+  sikwel-data-engineering-trainee-project-environment:
     build:
       context: .
       dockerfile: ./Dockerfile.sikwel-environment

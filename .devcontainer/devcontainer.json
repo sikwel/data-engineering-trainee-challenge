@@ -2,7 +2,7 @@
 {
     "name": "sikwel",
     "dockerComposeFile": ["./docker-compose.yml"],
-    "service": "sikwel-data-engineering-project-environment",
+    "service": "sikwel-data-engineering-trainee-project-environment",
     "workspaceFolder": "/home/vscode/workspace",
     "settings": {
         "terminal.integrated.defaultProfile.linux#": "/bin/bash",
