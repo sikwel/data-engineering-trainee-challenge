@@ -2,6 +2,31 @@
 
 Moin moin! Willkommen zum Data Engineering Trainee-Projekt – hier geht's um Docker, Python, Open-Meteo API und ein paar Daten! Lies dir die Anleitung sorgsam durch und starte direkt mit dem Projekt.
 
+## Erklärung des Skripts/meiner Lösung :)
+1. **Der Source Code ist in .devcontainer/src/**
+    - Als CLI Tool hab ich die click library verwendet. Ein Beispielaufruf
+    - `python __main__.py store-openmeteo-data --start-date 2024-01-01`
+    - Default sind alle Punkte von Aufg. 2 nur `--start-date` muss gesetzt werden
+    - In `logger_config.yaml` kann man den Logger einstellen. z.B. loggt er nun ins Terminal und in eine `file.log`
+    - Mit `python __main__.py fetch-database` kann man sich anschauen, ob auch etwas in der Datenbank steht
+  
+2. **Orchestrierung/Scheduling**
+    - Mir war nicht ganz klar inwiefern das Scheduling ablaufen soll, aber ich hab das nun mal so gelöst
+    - Das `__main__.py` Skript wird einmal täglich ausgeführt, holt und speichert die Wetterdaten des letzten Tages
+    - Hierfür wird ein neuer Docker Container `job_daily` mit `Dockerfile.crontab` gestartet
+    - In der `crontab` Datei ist der Job definiert und dieser führt `cron_job.sh` aus
+  
+3. **Ein bisschen Trial & Error**
+      - in `cron_job.sh` muss man den exakten Weg zur python executable angeben `/usr/local/bin/python`, sonst findet er den `python` Befehl nicht
+      - `--host postgresql` muss angegeben werden, da man nun auf die Datenbank im anderen Container zugreifen möchte
+      - Logs werden in `/var/log/cron.log` geschrieben
+      - Der Logger im Python Script erstellt auch noch eine `file.log`, diese findet sich bei Ausführung des Docker Containers aber in `/root/file.log`
+
+4. **Was man als nächstes machen könnte**
+   - Wenn man bei einem 2. Aufruf neue Wetterparameter speichern will, dann beschwert sich SQL bisher, dass es die Spalte noch nicht gibt
+   - Logs könnte man auch in ein externes Volume schreiben, damit die bestehen bleiben, wenn man den Container neu bauen muss
+
+
 ## Was du brauchst
 
 ### Git
