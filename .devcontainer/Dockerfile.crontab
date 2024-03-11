@@ -1,0 +1,18 @@
+FROM python:3.9-bullseye
+RUN apt-get update && apt-get -y install cron vim
+WORKDIR /app/src/
+
+# Install required python packages
+COPY ./requirements.txt /tmp/pip-tmp/
+RUN pip3 install --upgrade pip
+RUN pip3 install -r /tmp/pip-tmp/requirements.txt \
+    && rm -rf /tmp/pip-tmp
+
+# Copy cron job and give execution rights
+COPY ./crontab /etc/cron.d/
+COPY ./src/ /app/src/
+
+RUN chmod 0644 /etc/cron.d/crontab
+RUN crontab /etc/cron.d/crontab
+RUN touch /var/log/cron.log
+CMD ["cron", "-f"]

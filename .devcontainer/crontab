@@ -1,0 +1,4 @@
+# START CRON JOB
+# Save new openmeteo data each day at 15:00 for the last day
+0 15 * * * sh /app/src/cron_job.sh >> /var/log/cron.log 2>&1
+# END CRON JOB
