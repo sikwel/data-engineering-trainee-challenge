@@ -4,13 +4,13 @@ services:
   postgresql:
     image: "bitnami/postgresql:latest"
     ports:
-      - "5423:5432"
+      - "5432:5432"
     environment:
       - POSTGRESQL_DATABASE=sikwel_db
       - POSTGRESQL_USERNAME=sikwel
       - POSTGRESQL_PASSWORD=secret#s1kw3lPW
     volumes:
-      - ./postgres:/bitnami/postgresql/
+      - postgres:/bitnami/postgresql/
 
   sikwel-data-engineering-trainee-project-environment:
     build:
@@ -32,3 +32,7 @@ services:
 
     # Uncomment the next line to use a non-root user for all processes.
     user: vscode
+     
+volumes:
+  postgres:
+    driver: local
