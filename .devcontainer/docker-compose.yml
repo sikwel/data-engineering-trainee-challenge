@@ -32,6 +32,17 @@ services:
 
     # Uncomment the next line to use a non-root user for all processes.
     user: vscode
+      
+  job_daily:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.crontab
+      args:
+        # On Linux, you may need to update USER_UID and USER_GID below if not your local UID is not 1000.
+        USER_UID: 1000
+        USER_GID: 1000
+    links:
+     - postgresql
      
 volumes:
   postgres:
